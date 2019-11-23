@@ -1,0 +1,17 @@
+from typing import Any, Dict, NamedTuple, Type
+
+
+class MyTuple(NamedTuple):
+	""" Sample tuple class """
+	name: str
+	desc: str
+	
+
+def coerce_to_namedtuple(d: Dict[str, Any], T: Type):
+	""" Create a NamedTuple from a dict, ignoring extra keys in the dict """
+	return T(**{k: v for k, v in d.items() if k in T._fields})
+	
+
+d = dict(name='Some Name', desc='Some Description', other='Anything Else')
+print(coerce_to_namedtuple(d, MyTuple))
+# output: MyTuple(name='Some Name', desc='Some Description')
